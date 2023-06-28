@@ -21,7 +21,11 @@ pub contract ConnectNFT: NonFungibleToken {
       }
     }
 
-    pub resource Collection: NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic{
+    pub resource interface CollectionPublic{
+      pub fun borrowEntireNFT(id:UInt64):&ConnectNFT.NFT
+    }
+
+    pub resource Collection: NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic, CollectionPublic{
 
       pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
 
@@ -42,7 +46,12 @@ pub contract ConnectNFT: NonFungibleToken {
       }
 
       pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT {
-      return (&self.ownedNFTs[id] as &NonFungibleToken.NFT?)!
+        return (&self.ownedNFTs[id] as &NonFungibleToken.NFT?)!
+      }
+
+      pub fun borrowEntireNFT(id:UInt64) :&ConnectNFT.NFT{
+        let refrence = &self.ownedNFTs[id] as auth &NonFungibleToken.NFT?
+        return refrence as! &ConnectNFT.NFT
       }
 
       init(){
