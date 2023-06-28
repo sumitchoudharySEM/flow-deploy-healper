@@ -1,0 +1,11 @@
+flow keys generate
+
+            Private Key              abad59d89f5c30d624e2222daf0901ef243fef7dfb45f0796d4a11f37ec3d035 
+            Public Key               dce6606885484aefefbb8abf538f44d7d7d10302aebbbc232c2c4f2a203c4f2414ac227d7dc96a368e6ac13d125b080a327789359109d6685624401cac35b33f 
+
+        flow foucet testnet
+        address:
+        0x3aeeb4de672c74b1
+
+flow project deploy --network=testnet
+    HelloWorld -> 0x3aeeb4de672c74b1 (bef400a85aaf536bebf62b65353dbd3de4c37e3cdba51d4d0dad29308bf02f32)
