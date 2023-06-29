@@ -5,16 +5,22 @@ import FlowToken from 0x01
 
 pub contract NFTMarketplace {
 
-  pub resource SaleCollection{
+  pub resource interface SalecollectionPublic {
+    pub fun purchase(id:UInt64, recipentCollection: &ConnectNFT.Collection{NonFungibleToken.CollectionPublic}, payment:@FlowToken.Vault)
+    pub fun getPrice(id:UInt64):UFix64
+    pub fun getIDs(): [UInt64]
+  }
+
+  pub resource SaleCollection:SalecollectionPublic{
 
     pub var forSale: {UInt64: UFix64}
 
     pub let ConnectNFTCollection: Capability<&ConnectNFT.Collection>
     pub let FlowTokenVault :Capability<&FlowToken{FungibleToken.Receiver}>
 
-    pub fun listForSale(id: UInt64, price:UInt64){
+    pub fun listForSale(id: UInt64, price:UFix64){
       pre{
-        price >= 0: " it dont make sence"
+        price >= 0.0: " it dont make sence"
         self.ConnectNFTCollection.borrow()!.getIDs().contains(id): "you dont own this nft"
       }
       self.forSale[id] = price
