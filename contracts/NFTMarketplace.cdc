@@ -1,7 +1,8 @@
-import ConnectNFT from 0x01
-import NonFungibleToken from 0x01
-import FungibleToken from 0x03
-import FlowToken from 0x01
+import ConnectNFT from "./connectNFT.cdc"
+import NonFungibleToken from 0x631e88ae7f1d7c20
+import FungibleToken from "./FungibleToken.cdc"
+import FlowToken from "./FlowToken.cdc"
+//0x7e60df042a9c0868
 
 pub contract NFTMarketplace {
 
@@ -16,7 +17,7 @@ pub contract NFTMarketplace {
     pub var forSale: {UInt64: UFix64}
 
     pub let ConnectNFTCollection: Capability<&ConnectNFT.Collection>
-    pub let FlowTokenVault :Capability<&FlowToken{FungibleToken.Receiver}>
+    pub let FlowTokenVault :Capability<&FlowToken.Vault{FungibleToken.Receiver}>
 
     pub fun listForSale(id: UInt64, price:UFix64){
       pre{
@@ -47,14 +48,14 @@ pub contract NFTMarketplace {
       return self.forSale.keys
     }
 
-    init(_ConnectNFTCollection: Capability<&ConnectNFT.Collection>,_FlowTokenVault :Capability<&FlowToken{FungibleToken.Receiver}>){
+    init(_ConnectNFTCollection: Capability<&ConnectNFT.Collection>,_FlowTokenVault :Capability<&FlowToken.Vault{FungibleToken.Receiver}>){
       self.forSale = {}
       self.ConnectNFTCollection = _ConnectNFTCollection
       self.FlowTokenVault = _FlowTokenVault
     }
   }
 
-  pub fun createSaleCollection(ConnectNFTCollection: Capability<&ConnectNFT.Collection>,FlowTokenVault :Capability<&FlowToken{FungibleToken.Receiver}>) :@SaleCollection {
+  pub fun createSaleCollection(ConnectNFTCollection: Capability<&ConnectNFT.Collection>,FlowTokenVault :Capability<&FlowToken.Vault{FungibleToken.Receiver}>) :@SaleCollection {
    return <- create SaleCollection(_ConnectNFTCollection:ConnectNFTCollection, _FlowTokenVault :FlowTokenVault)
   }
 

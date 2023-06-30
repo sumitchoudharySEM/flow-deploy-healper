@@ -8,4 +8,9 @@ flow keys generate
         0x3aeeb4de672c74b1
 
 flow project deploy --network=testnet
-    HelloWorld -> 0x3aeeb4de672c74b1 (bef400a85aaf536bebf62b65353dbd3de4c37e3cdba51d4d0dad29308bf02f32)
+    Deploying 2 contracts for accounts: testnet-account
+
+    ConnectNFT -> 0x3aeeb4de672c74b1 [skipping, no changes found]
+    NFTMarketplace -> 0x3aeeb4de672c74b1 (a6f36af84324705e6b0a430cc5d92f6f9908238045c7434cf7ff9e7d7f4e23c1) 
+
+    All contracts deployed successfully
